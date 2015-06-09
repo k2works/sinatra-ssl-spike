@@ -22,22 +22,23 @@ SinatraアプリケーションにおけるSSL構成検証
     $ vagrant ssh
 
 ## <a name="1">Webサーバ</a>
-### Nginxのセットアップ
+### Nginxの設定
+#### Nginxのセットアップ
 
-    $ cd /vagrant/nginx
+    $ cd /vagrant/nginx/base
     $ sudo docker build -t k2works/nginx-sample .
     $ sudo docker run --name nginx-sample -d -p 9292:80 k2works/nginx-sample
     $ crul localhost:9292
     $ sudo docker exec -it  nginx-sample /bin/bash
     # curl localhost
 
-### 設定ファイルをカスタムできるようにする
+#### 設定ファイルをカスタムできるようにする
 
-    $ sudo docker cp nginx-sample:/etc/nginx/nginx.conf /vagrant/nginx/nginx.conf
+    $ sudo docker cp nginx-sample:/etc/nginx/nginx.conf /vagrant/nginx/base/nginx.conf
     $ mkdir conf.d
-    $ sudo docker cp nginx-sample:/etc/nginx/conf.d/default.conf /vagrant/nginx/conf.d/
+    $ sudo docker cp nginx-sample:/etc/nginx/conf.d/default.conf /vagrant/nginx/base/conf.d/
 
-_Dockerfile_に以下を追加する
+_Dockerfile_ に以下を追加する
 
     COPY nginx.conf /etc/nginx/nginx.conf
     COPY conf.d/default.conf /etc/nginx/conf.d/default.conf
