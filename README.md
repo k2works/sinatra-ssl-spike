@@ -48,8 +48,23 @@ _Dockerfile_ に以下を追加する
     $ sudo docker build -t k2works/nginx-sample-custom .
     $ sudo docker run --name nginx-sample-custom -d k2works/nginx-sample-custom
 
+### リバースプロキシ
+#### Apacheのセットアップ
+
+    $ sudo docker cp web:/usr/local/apache2/conf/httpd.conf /vagrant/nginx/reverse_proxy/httpd.conf
+    $ sudo docker build -t k2works/revpro-sample .
+    $ sudo docker run -d -p 9292:80 --name web k2works/revpro-sample
+
+#### リバースプロクシを確認する
+
+    $ curl localhost:9292
+    $ sudo docker exec -it web httpd-foreground &
+    $ curl localhost:9292
+    $ fg
+
 ## <a name="2">APサーバ</a>
 ## <a name="3">アプリケーション</a>
 
 # 参照
-+ [OFFICIAL REPO](https://registry.hub.docker.com/_/nginx)
++ [OFFICIAL REPO nginx](https://registry.hub.docker.com/_/nginx)
++ [OFFICIAL REPO httpd](https://registry.hub.docker.com/_/httpd/)

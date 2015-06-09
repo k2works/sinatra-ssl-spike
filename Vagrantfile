@@ -123,6 +123,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	 chef.add_recipe "chef-dk"
    chef.add_recipe "docker"
    chef.add_recipe "curl"
+   chef.add_recipe "python"
   end
 
   # Enable provisioning with chef server, specifying the chef server URL,
