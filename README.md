@@ -55,12 +55,13 @@ _Dockerfile_ に以下を追加する
     $ sudo docker build -t k2works/revpro-sample .
     $ sudo docker run -d -p 9292:80 --name web k2works/revpro-sample
 
-#### リバースプロクシを確認する
+#### リバースプロキシを確認する
 
     $ curl localhost:9292
-    $ sudo docker exec -it web httpd-foreground &
+    $ sudo docker exec -it web service apache2 stop
     $ curl localhost:9292
-    $ fg
+    $ sudo docker exec -it web service apache2 start
+    $ curl localhost:9292
 
 ## <a name="2">APサーバ</a>
 ## <a name="3">アプリケーション</a>
@@ -68,3 +69,4 @@ _Dockerfile_ に以下を追加する
 # 参照
 + [OFFICIAL REPO nginx](https://registry.hub.docker.com/_/nginx)
 + [OFFICIAL REPO httpd](https://registry.hub.docker.com/_/httpd/)
++ [Dockerで複数デーモンを起動する手法をまとめてみる](https://www.hilotech.jp/blog/it/290)
