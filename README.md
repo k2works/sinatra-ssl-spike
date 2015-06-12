@@ -124,9 +124,58 @@ Dockerfileの編集
 
 
 ## <a name="2">APサーバ</a>
+### Unicornの設定
+#### リバースプロキシ構成（SSL無し）
+
+    $ cd /vagrant/sinatra/unicorn/reverse_proxy/
+    $ sudo docker build -t k2works/sinatra-unicorn-revpro .  
+    $ sudo docker run -d -p 9292:80 --name app k2works/sinatra-unicorn-revpro
+
+#### リバースプロキシされているか確認する
+
+    $ curl localhost:9292/hello.rb
+    hello world!
+
+#### リバースプロキシ構成（SSLあり）
+
+    $ cd /vagrant/sinatra/unicorn/ssl/
+    $ sudo docker build -t k2works/sinatra-unicorn-ssl-revpro .  
+    $ sudo docker run -d -p 9292:443 --name ssl-app k2works/sinatra-unicorn-ssl-revpro
+
+#### リバースプロキシされているか確認する
+
+    $ curl -k https://localhost:9292/hello.rb
+    hello world!
+
+### Pumaの設定
+#### リバースプロキシ構成（SSL無し）
+
+    $ cd /vagrant/sinatra/puma/reverse_proxy/
+    $ sudo docker build -t k2works/sinatra-puma-revpro .  
+    $ sudo docker run -d -p 9292:80 --name app k2works/sinatra-puma-revpro
+
+#### リバースプロキシされているか確認する
+
+    $ curl localhost:9292
+    It works!
+
+#### リバースプロキシ構成（SSLあり）
+
+    $ cd /vagrant/sinatra/puma/ssl/
+    $ sudo docker build -t k2works/sinatra-puma-ssl-revpro .  
+    $ sudo docker run -d -p 9292:443 --name ssl-app k2works/sinatra-puma-ssl-revpro
+
+#### リバースプロキシされているか確認する
+
+    $ curl -k https://localhost:9292
+    It works!
+
 ## <a name="3">アプリケーション</a>
 
 # 参照
 + [OFFICIAL REPO nginx](https://registry.hub.docker.com/_/nginx)
 + [OFFICIAL REPO httpd](https://registry.hub.docker.com/_/httpd/)
 + [Dockerで複数デーモンを起動する手法をまとめてみる](https://www.hilotech.jp/blog/it/290)
++ [nginx + Unicorn + Sinatraでhello world](http://hayo0914.hatenablog.com/entry/2014/09/15/163648)
++ [puma/puma](https://github.com/puma/puma)
++ [ctalkington / Gemfile](https://gist.github.com/ctalkington/4448153)
