@@ -63,6 +63,66 @@ _Dockerfile_ に以下を追加する
     $ sudo docker exec -it web service apache2 start
     $ curl localhost:9292
 
+### SSL
+#### SSL証明書の生成にOpenSSLを使用する
+
+1. 秘密鍵を生成する
+
+        $ cd /vagrant/nginx/ssl
+        $ mkdir .ssl
+        $ openssl genrsa 2048 > .ssl/ssl-sample.com.pem
+
+1. 証明書発行依頼書の作成
+
+        $ openssl req -new -key .ssl/ssl-sample.com.pem -out .ssl/ssl-sample.com.csr.pem
+        You are about to be asked to enter information that will be incorporated
+        into your certificate request.
+        What you are about to enter is what is called a Distinguished Name or a DN.
+        There are quite a few fields but you can leave some blank
+        For some fields there will be a default value,
+        If you enter '.', the field will be left blank.
+        -----
+        Country Name (2 letter code) [AU]:JP
+        State or Province Name (full name) [Some-State]:Hiroshima
+        Locality Name (eg, city) []:Hiroshima-Shi
+        Organization Name (eg, company) [Internet Widgits Pty Ltd]:Sample Corp
+        Organizational Unit Name (eg, section) []:sample
+        Common Name (e.g. server FQDN or YOUR name) []:www.ssl-sample.com
+        Email Address []:
+
+        Please enter the following 'extra' attributes
+        to be sent with your certificate request
+        A challenge password []:
+        An optional company name []:
+
+1. サーバー証明書（自己証明）の作成
+
+        $ openssl x509 -req -days 365 -in .ssl/ssl-sample.com.csr.pem -signkey .ssl/ssl-sample.com.pem -out .ssl/ssl-sample.com.crt.pem
+
+#### リバースプロキシをSSL対応する
+
+設定ファイルの追加
+
++ _nginx/ssl/conf.d/ssl.conf_
+
+Dockerfileの編集
+
++ _nginx/ssl/Dockerfile_
+
+カスタムイメージをビルドする
+
+    $ sudo docker build -t k2works/ssl-sample .
+    $ sudo docker run -d -p 9292:443 --name web-ssl k2works/ssl-sample
+
+#### SSLでアクセスできてかつリバースプロキシが機能しているかを確認する
+
+    $ curl -k https://localhost:9292
+    $ sudo docker exec -it web-ssl service nginx stop
+    $ curl -k https://localhost:9292
+    $ sudo docker exec -it web-ssl service nginx start
+    $ curl -k https://localhost:9292
+
+
 ## <a name="2">APサーバ</a>
 ## <a name="3">アプリケーション</a>
 
