@@ -172,6 +172,29 @@ Dockerfileの編集
 
 ## <a name="3">アプリケーション</a>
 
+### シンプル
+
+     $ cd /vagrant/application/simple/
+     $ sudo docker build -t k2works/sinatra-application-simple .
+     $ sudo docker run -d -p 9292:9292 --name app-simple k2works/sinatra-application-simple
+     $ curl localhost:9292
+
+### リバースプロキシ(SSL無し)
+
+     $ cd /vagrant/application/reverse_proxy/
+     $ sudo docker build -t k2works/sinatra-application-revpro .
+     $ sudo docker run -d -p 80:80 --name app-revpro k2works/sinatra-application-revpro
+     $ curl localhost
+     $ curl localhost/special/
+
+### リバースプロキシ(SSLあり)
+
+     $ cd /vagrant/application/ssl/
+     $ sudo docker build -t k2works/sinatra-application-revpro-ssl .
+     $ sudo docker run -d -p 443:443 --name app-revpro-ssl k2works/sinatra-application-revpro-ssl
+     $ curl -k https://localhost
+     $ curl -k https://localhost/special/
+
 # 参照
 + [OFFICIAL REPO nginx](https://registry.hub.docker.com/_/nginx)
 + [OFFICIAL REPO httpd](https://registry.hub.docker.com/_/httpd/)
@@ -179,3 +202,5 @@ Dockerfileの編集
 + [nginx + Unicorn + Sinatraでhello world](http://hayo0914.hatenablog.com/entry/2014/09/15/163648)
 + [puma/puma](https://github.com/puma/puma)
 + [ctalkington / Gemfile](https://gist.github.com/ctalkington/4448153)
++ [Dockerfileでgit clone を使う際にキャッシュをADDで回避](http://qiita.com/sawanoboly/items/ac559c43b9662304931a)
++ [bergcloud/example-sinatra-site](https://github.com/bergcloud/example-sinatra-site)
