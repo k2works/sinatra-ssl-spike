@@ -195,6 +195,17 @@ Dockerfileの編集
      $ curl -k https://localhost
      $ curl -k https://localhost/special/
 
+### AWS Elastic BeanstalkのDockerコンテナで使う
+
+1. `eb init`でアプリケーションを作る
+1. `eb console`でコンソール画面から環境を作る
+1. `eb list`で作成した環境を確認するして'eb use'でデフォルト環境にする
+1. _/nginx/conf.d/default.conf_ のサーバー名をElastic BeanstalkのURLにする
+1. `eb deploy`でアプリケーションをデプロイする
+1. `eb open`でアプリケーションを確認する
+1. SSL対応する場合は _.ebextensions/myapp.config_ を追加すればOK
+
+
 # 参照
 + [OFFICIAL REPO nginx](https://registry.hub.docker.com/_/nginx)
 + [OFFICIAL REPO httpd](https://registry.hub.docker.com/_/httpd/)
@@ -204,3 +215,4 @@ Dockerfileの編集
 + [ctalkington / Gemfile](https://gist.github.com/ctalkington/4448153)
 + [Dockerfileでgit clone を使う際にキャッシュをADDで回避](http://qiita.com/sawanoboly/items/ac559c43b9662304931a)
 + [bergcloud/example-sinatra-site](https://github.com/bergcloud/example-sinatra-site)
++ [Docker の単一インスタンスの SSL](http://docs.aws.amazon.com/ja_jp/elasticbeanstalk/latest/dg/SSLDocker.SingleInstance.html)
