@@ -1,0 +1,6 @@
+set daemon 60
+set logfile syslog facility log_daemon
+include /etc/monit/conf.d/*
+set httpd port 2812 and
+  use address 0.0.0.0 # 全てのホストからの接続を受け付ける
+  allow admin:monit  # ログイン名、パスワードを指定
