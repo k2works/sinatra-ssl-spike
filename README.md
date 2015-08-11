@@ -103,7 +103,7 @@ _Dockerfile_ に以下を追加する
 
 設定ファイルの追加
 
-+ _nginx/ssl/conf.d/ssl.conf_
++ _nginx/ssl/nginx/ssl.conf_
 
 Dockerfileの編集
 
@@ -117,9 +117,9 @@ Dockerfileの編集
 #### SSLでアクセスできてかつリバースプロキシが機能しているかを確認する
 
     $ curl -k https://localhost:9292
-    $ sudo docker exec -it web-ssl service nginx stop
+    $ sudo docker exec -it web-ssl service apache2 stop
     $ curl -k https://localhost:9292
-    $ sudo docker exec -it web-ssl service nginx start
+    $ sudo docker exec -it web-ssl service apache2 start
     $ curl -k https://localhost:9292
 
 
