@@ -51,7 +51,7 @@ _Dockerfile_ に以下を追加する
 ### リバースプロキシ
 #### Apacheのセットアップ
 
-    $ sudo docker cp web:/usr/local/apache2/conf/httpd.conf /vagrant/nginx/reverse_proxy/httpd.conf
+    $ sudo docker cp web:/usr/local/apache2/conf/httpd.conf /vagrant/nginx/reverse_proxy/apache2/httpd.conf
     $ sudo docker build -t k2works/revpro-sample .
     $ sudo docker run -d -p 9292:80 --name web k2works/revpro-sample
 
@@ -215,3 +215,5 @@ Dockerfileの編集
 + [Dockerfileでgit clone を使う際にキャッシュをADDで回避](http://qiita.com/sawanoboly/items/ac559c43b9662304931a)
 + [bergcloud/example-sinatra-site](https://github.com/bergcloud/example-sinatra-site)
 + [Docker の単一インスタンスの SSL](http://docs.aws.amazon.com/ja_jp/elasticbeanstalk/latest/dg/SSLDocker.SingleInstance.html)
++ [Dockerfile の書き方「私的」なベストプラクティス（3）〜サービスの起動について〜](http://inokara.hateblo.jp/entry/2013/12/29/215322)
++ [Monitを使ってApacheを監視する(1)](http://server-setting.info/centos/monit_apache_1.html)
